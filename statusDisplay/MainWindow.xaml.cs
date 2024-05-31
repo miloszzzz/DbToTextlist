@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +24,9 @@ namespace statusDisplay
     /// </summary>
     public partial class MainWindow : Window
     {
+        bool _sclCopied = false;
+        bool _textlistCopied = false;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -30,62 +34,63 @@ namespace statusDisplay
 
         private void textChangedEventHandler(object sender, TextChangedEventArgs e)
         {
-            sclText.Text = dbText.Text;
-            textlistText.Text = string.Empty;
-
-            string[] lines = sclText.Text.Split("\n");
-            var statuses = new List<Status>();
-
-            foreach (string line in lines)
-            {
-                string[] cells = line.Split("\t");
-
-                if (cells.Length >= 4)
-                {
-                    bool itsInteger = cells.Any(c => isIntegerType(c));
-
-                    if (itsInteger)
-                    {
-                        Status status = new Status();
-
-                        status.Name = cells[1];
-                        status.Id = int.Parse(cells[3]);
-
-                        statuses.Add(status);
-                    }
-                }
-            }
-
-            if (statuses.Count > 0)
-            {
-                foreach (Status status in statuses)
-                {
-                    textlistText.Text += status.Id + "\t" + status.Name + "\n";
-                }
-            }
+            makeTexts();
         }
 
         private void clickCopySclHandler(object sender, RoutedEventArgs e)
         {
-
+            Clipboard.SetText(sclText.Text);
+            _sclCopied = true;
         }
 
         private void clickCpoyTextlistHandler(object sender, RoutedEventArgs e)
         {
+            Clipboard.SetText(textlistText.Text);
+            _textlistCopied = true;
+        }
 
+        private void checkBoxRenumberClickHandler(object sender, RoutedEventArgs e)
+        {
+            makeTexts();
+        }
+
+        private void checkBoxWithNumbersClickHandler(object sender, RoutedEventArgs e)
+        {
+            makeTexts();
         }
 
 
-        private bool isIntegerType(string variableType)
+        private void makeTexts()
         {
-            string[] integerTypes = { "Int", "UInt", "SInt",
-                "USInt", "LInt", "ULInt"};
+            var statuses = Status.DbToStatusList(dbText.Text);
 
-            foreach (string integerType in integerTypes)
+            textlistText.Text = statuses.GetStatusesTexts((bool)checkBoxTextlistWithNumbers.IsChecked, (bool)checkBoxRenumberTextlist.IsChecked);
+
+            if ((bool)checkBoxRenumberTextlist.IsChecked)
             {
-                if (integerType == variableType) return true;
+                sclText.Text = statuses.GetSclCode();
             }
-            return false;
+
+            _sclCopied = false;
+            _textlistCopied = false;
+        }
+
+
+
+    }
+
+    public class BoolToFontWeightConverter : DependencyObject, IValueConverter
+    {
+        public object Convert(object value, Type targetType,
+                              object parameter, CultureInfo culture)
+        {
+            return ((bool)value) ? FontWeights.Bold : FontWeights.Normal;
+        }
+
+        public object ConvertBack(object value, Type targetType,
+                                  object parameter, CultureInfo culture)
+        {
+            return Binding.DoNothing;
         }
     }
 }
