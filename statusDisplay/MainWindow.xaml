@@ -15,7 +15,7 @@
         <TabItem>
             <TabItem.Header>
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock>Tab 1</TextBlock>
+                    <TextBlock>Status</TextBlock>
                 </StackPanel>
             </TabItem.Header>
             <Grid Margin="10">
@@ -83,7 +83,7 @@
             </Grid>
 
         </TabItem>
-        <TabItem Header="Tab 2"></TabItem>
+        <TabItem Header="Sekwencja"></TabItem>
     </TabControl>
     
     
