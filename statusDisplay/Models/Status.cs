@@ -5,7 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Shapes;
 using System.Xml;
+<<<<<<< HEAD
 using static statusDisplay.Models.StringExtensions;
+=======
+>>>>>>> 595a7f7451ae470177e7d8afc4dfce27a269c8e2
 
 namespace statusDisplay.Models
 {
@@ -53,8 +56,11 @@ namespace statusDisplay.Models
                     {
                         Status status = new Status(cells[3], cells[1]);
 
+<<<<<<< HEAD
                         status.Name = status.Name.SeparateWords();
 
+=======
+>>>>>>> 595a7f7451ae470177e7d8afc4dfce27a269c8e2
                         if (status.Id != -1) statuses.Add(status);
                     }
                 }
@@ -82,6 +88,9 @@ namespace statusDisplay.Models
             }
             return false;
         }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 595a7f7451ae470177e7d8afc4dfce27a269c8e2
     }
 }

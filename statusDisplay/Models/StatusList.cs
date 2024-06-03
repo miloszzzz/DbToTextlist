@@ -61,17 +61,28 @@ namespace statusDisplay.Models
 
         public string GetSclCode()
         {
+<<<<<<< HEAD
             string sclCode = "CASE #In_Status OF\n";
+=======
+            string sclCode = "CASE #In_Status OF\r\n";
+>>>>>>> 595a7f7451ae470177e7d8afc4dfce27a269c8e2
             int hmiNumber = 1;
 
             foreach (Status status in Statuses)
             {
                 if (status.Id < 1) continue;
 
+<<<<<<< HEAD
                 sclCode += $"\t{status.Id}:\n\t\t" + $"#Out_HmiStatusDisplay := {hmiNumber++};\n";
             }
 
             sclCode += "\tELSE\n\t\t#Out_HmiStatusDisplay := -1;\nEND_CASE;";
+=======
+                sclCode += $"\t{status.Id}:\r\n\t\t" + $"#Out_HmiStatusDisplay := {hmiNumber++};\r\n";
+            }
+
+            sclCode += "\tELSE\r\n\t\t#Out_HmiStatusDisplay := -1;\r\nEND_CASE;";
+>>>>>>> 595a7f7451ae470177e7d8afc4dfce27a269c8e2
 
             return sclCode;
         }
