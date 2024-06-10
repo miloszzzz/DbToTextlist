@@ -39,17 +39,17 @@ namespace statusDisplay.Models
 
                 if (withNumbers == false)
                 {
-                    statusesText += status.Name + "\n";
+                    statusesText += status.Name + "\r\n";
                 }
                 else
                 {
                     if (renumber)
                     {
-                        statusesText += hmiNumber++ + "\t" + status.Name + "\n";
+                        statusesText += hmiNumber++ + "\t" + status.Name + "\r\n";
                     }
                     else
                     {
-                        statusesText += status.Id + "\t" + status.Name + "\n";
+                        statusesText += status.Id + "\t" + status.Name + "\r\n";
                     }
                 }
                 
