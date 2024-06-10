@@ -51,7 +51,7 @@ namespace statusDisplay.Models
 
                     if (itsInteger)
                     {
-                        Status status = new Status(cells[3], cells[1]);
+                        Status status = new(cells[3], cells[1]);
 
                         status.Name = status.Name.SeparateWords();
 

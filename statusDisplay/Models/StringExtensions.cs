@@ -14,21 +14,42 @@ namespace statusDisplay.Models
 
             for (int i = 2; i < words.Length; i++)
             {
+                if (words[i] == '_')
+                {
+                    char[] letters = words.ToCharArray();
+                    letters[i] = ' ';
+                    words = string.Join("", letters);
+                }
+                if (!char.IsLetter(words[i-1]) && !char.IsDigit(words[i-1])) continue;
                 if (char.IsLower(words[i]) |char.IsSeparator(words[i])) continue;
 
-                if (IsShortcut(words[i], words[i - 1]) || IsNumber(words[i], words[i - 1])) continue;
+                if (IsShortcut(words[i], words[i - 1]) ||
+                    IsNumber(words[i], words[i - 1])) continue;
 
                 if (!char.IsDigit(words[i]))
                 {
-                    char[] letters = words.ToCharArray();
-                    letters[i] = char.ToLower(letters[i]);
-                    words = string.Join("", letters);
+                    if (i + 1 <= words.Length)
+                    {
+                        if (!IsShortcut(words[i], words[i + 1]))
+                        {
+                            char[] letters = words.ToCharArray();
+                            letters[i] = char.ToLower(letters[i]);
+                            words = string.Join("", letters);
+                        }
+                    }
                 }
 
                 words = words.Insert(i++, " ");
             }
 
             return words;
+        }
+
+
+        static bool IsShortcut(char a, char b, char c)
+        {
+            if (char.IsUpper(a) && char.IsUpper(b) && char.IsUpper(c)) return true;
+            return false;
         }
 
 

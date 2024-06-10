@@ -12,70 +12,16 @@ namespace statusDisplay.Models
     {
         public List<Status> Statuses { get; set; }
 
-        public int Count => ((ICollection<Status>)Statuses).Count;
-
-        public bool IsReadOnly => ((ICollection<Status>)Statuses).IsReadOnly;
-
-        public Status this[int index] { get => ((IList<Status>)Statuses)[index]; set => ((IList<Status>)Statuses)[index] = value; }
-
         public StatusList()
         {
             Statuses = new List<Status>();
         }
 
+        public int Count => ((ICollection<Status>)Statuses).Count;
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public string GetStatusesTexts(bool withNumbers, bool renumber)
-        {
-            string statusesText = string.Empty;
-            int hmiNumber = 1;
+        public bool IsReadOnly => ((ICollection<Status>)Statuses).IsReadOnly;
 
-            foreach (Status status in Statuses)
-            {
-                if (status.Id < 1) continue;
-
-                if (withNumbers == false)
-                {
-                    statusesText += status.Name + "\r\n";
-                }
-                else
-                {
-                    if (renumber)
-                    {
-                        statusesText += hmiNumber++ + "\t" + status.Name + "\r\n";
-                    }
-                    else
-                    {
-                        statusesText += status.Id + "\t" + status.Name + "\r\n";
-                    }
-                }
-                
-            }
-
-            return statusesText;
-        }
-
-
-        public string GetSclCode()
-        {
-            string sclCode = "CASE #In_Status OF\n";
-            int hmiNumber = 1;
-
-            foreach (Status status in Statuses)
-            {
-                if (status.Id < 1) continue;
-
-                sclCode += $"\t{status.Id}:\n\t\t" + $"#Out_HmiStatusDisplay := {hmiNumber++};\n";
-            }
-
-            sclCode += "\tELSE\n\t\t#Out_HmiStatusDisplay := -1;\nEND_CASE;";
-
-            return sclCode;
-        }
-
+        public Status this[int index] { get => ((IList<Status>)Statuses)[index]; set => ((IList<Status>)Statuses)[index] = value; }
 
         public StatusList RemoveDuplicates()
         {
@@ -138,6 +84,58 @@ namespace statusDisplay.Models
         IEnumerator IEnumerable.GetEnumerator()
         {
             return ((IEnumerable)Statuses).GetEnumerator();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public string GetStatusesTexts(bool withNumbers, bool renumber)
+        {
+            string statusesText = string.Empty;
+            int hmiNumber = 1;
+
+            foreach (Status status in Statuses)
+            {
+                if (status.Id < 1) continue;
+
+                if (withNumbers == false)
+                {
+                    statusesText += status.Name + "\r\n";
+                }
+                else
+                {
+                    if (renumber)
+                    {
+                        statusesText += hmiNumber++ + "\t" + status.Name + "\r\n";
+                    }
+                    else
+                    {
+                        statusesText += status.Id + "\t" + status.Name + "\r\n";
+                    }
+                }
+
+            }
+
+            return statusesText;
+        }
+
+
+        public string GetSclCode()
+        {
+            string sclCode = "CASE #In_Status OF\n";
+            int hmiNumber = 1;
+
+            foreach (Status status in Statuses)
+            {
+                if (status.Id < 1) continue;
+
+                sclCode += $"\t{status.Id}:\n\t\t" + $"#Out_HmiStatusDisplay := {hmiNumber++};\n";
+            }
+
+            sclCode += "\tELSE\n\t\t#Out_HmiStatusDisplay := -1;\nEND_CASE;";
+
+            return sclCode;
         }
     }
 }

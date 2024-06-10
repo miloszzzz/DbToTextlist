@@ -32,35 +32,35 @@ namespace statusDisplay
             InitializeComponent();
         }
 
-        private void textChangedEventHandler(object sender, TextChangedEventArgs e)
+        private void TextChangedEventHandler(object sender, TextChangedEventArgs e)
         {
-            makeTexts();
+            MakeStatusTexts();
         }
 
-        private void clickCopySclHandler(object sender, RoutedEventArgs e)
+        private void ClickCopySclHandler(object sender, RoutedEventArgs e)
         {
             Clipboard.SetText(sclText.Text);
             _sclCopied = true;
         }
 
-        private void clickCpoyTextlistHandler(object sender, RoutedEventArgs e)
+        private void ClickCpoyTextlistHandler(object sender, RoutedEventArgs e)
         {
             Clipboard.SetText(textlistText.Text);
             _textlistCopied = true;
         }
 
-        private void checkBoxRenumberClickHandler(object sender, RoutedEventArgs e)
+        private void CheckBoxRenumberClickHandler(object sender, RoutedEventArgs e)
         {
-            makeTexts();
+            MakeStatusTexts();
         }
 
-        private void checkBoxWithNumbersClickHandler(object sender, RoutedEventArgs e)
+        private void CheckBoxWithNumbersClickHandler(object sender, RoutedEventArgs e)
         {
-            makeTexts();
+            MakeStatusTexts();
         }
 
 
-        private void makeTexts()
+        private void MakeStatusTexts()
         {
             var statuses = Status.DbToStatusList(dbText.Text);
 
