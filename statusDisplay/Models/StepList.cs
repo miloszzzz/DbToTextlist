@@ -71,5 +71,53 @@ namespace statusDisplay.Models
         {
             return ((IEnumerable)Steps).GetEnumerator();
         }
+
+
+        public string GetSteps(bool withNumbers, bool renumber)
+        {
+            string stepsTexts = string.Empty;
+            int hmiNumber = 1;
+
+            foreach (Step step in Steps)
+            {
+                if (step.Id < 1) continue;
+
+                if (withNumbers == false)
+                {
+                    stepsTexts += step.Name + "\r\n";
+                }
+                else
+                {
+                    if (renumber)
+                    {
+                        stepsTexts += hmiNumber++ + "\t" + step.Name + "\r\n";
+                    }
+                    else
+                    {
+                        stepsTexts += step.Id + "\t" + step.Name + "\r\n";
+                    }
+                }
+            }
+
+            return stepsTexts;
+        }
+
+
+        public string GetSclCode()
+        {
+            string sclCode = "CASE #In_Step OF\n";
+            int hmiNumber = 1;
+
+            foreach (Step step in Steps)
+            {
+                if (step.Id < 1) continue;
+
+                sclCode += $"\t{step.Id}:\n\t\t" + $"#Out_HmiStepDisplay := {hmiNumber++};\n";
+            }
+
+            sclCode += "\tELSE\n\t\t#Out_HmiStepDisplay := -1;\nEND_CASE;";
+
+            return sclCode;
+        }
     }
 }

@@ -39,19 +39,42 @@ namespace statusDisplay.Models
             var steps = new StepList();
             string[] lines = db.Split("\n");
 
+            bool lookingForStep = true;
+
             foreach (string line in lines)
             {
                 string[] cells = line.Split("\t");
 
                 if (cells.Length >= 4)
                 {
-                    bool itsStep = cells.Any(c => c.Contains("Step"));
-
-                    if (itsStep)
+                    if (lookingForStep)
                     {
-                        Step step = new(0, cells[1]);
+                        bool itsStep = cells[2].Contains("Step");
 
-                        steps.Add(step);
+                        if (itsStep)
+                        {
+                            Step step = new(0, cells[1]);
+
+                            steps.Add(step);
+
+                            lookingForStep = false;
+                        }
+                    }
+                    else
+                    {
+                        bool itsStepNumber = cells[1].Contains("SNO");
+
+                        if (itsStepNumber)
+                        {
+                            int stepNumber;
+
+                            if (int.TryParse(cells[3], out stepNumber))
+                            {
+                                steps.Last().Id = stepNumber;
+                            }
+
+                            lookingForStep = true;
+                        }
                     }
                 }
             }

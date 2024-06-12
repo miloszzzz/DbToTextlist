@@ -76,7 +76,43 @@ namespace statusDisplay
         }
 
 
+        private void MakeSeqTexts()
+        {
+            var steps = Step.GraphToStepList(seqText.Text);
+            
+            textlistTextSeq.Text = steps.GetSteps((bool)checkBoxTextlistWithNumbersSeq.IsChecked, (bool)checkBoxRenumberTextlistSeq.IsChecked);
 
+            if ((bool)checkBoxRenumberTextlistSeq.IsChecked)
+            {
+                sclTextSeq.Text = steps.GetSclCode();
+            }
+        }
+
+
+        private void ClickCopySclSeqHandler(object sender, RoutedEventArgs e)
+        {
+            Clipboard.SetText(sclTextSeq.Text);
+        }
+
+        private void ClickCpoyTextlistSeqHandler(object sender, RoutedEventArgs e)
+        {
+            Clipboard.SetText(textlistTextSeq.Text);
+        }
+
+        private void SeqTextChangedEventHandler(object sender, TextChangedEventArgs e)
+        {
+            MakeSeqTexts();
+        }
+
+        private void CheckBoxRenumberSeqClickHandler(object sender, RoutedEventArgs e)
+        {
+            MakeSeqTexts();
+        }
+
+        private void CheckBoxWithNumbersSeqClickHandler(object sender, RoutedEventArgs e)
+        {
+            MakeSeqTexts();
+        }
     }
 
     public class BoolToFontWeightConverter : DependencyObject, IValueConverter
