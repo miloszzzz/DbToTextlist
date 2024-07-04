@@ -1,6 +1,6 @@
-# StatusDisplay App
+# DbToTextlist App
 
-StatusDisplay was created for Siemens PLC programmers to speed up making textlists of statuses defined in DB or graph sequence steps. It's especially handy with Proface GP-Pro EX textlists limited to 512 lines.
+DbToTextlist was created for Siemens PLC programmers to speed up making textlists of statuses defined in DB or graph sequence steps. It's especially handy with Proface GP-Pro EX textlists limited to 512 lines.
 
 ## How to use
 
