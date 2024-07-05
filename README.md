@@ -2,9 +2,9 @@
 
 DbToTextlist was created for Siemens PLC programmers to speed up making textlists of statuses defined in DB or graph sequence steps. It's especially handy with Proface GP-Pro EX textlists limited to 512 lines.
 
+If you work 100% in TIA Portal environment then check out <a href="https://github.com/miloszzzz/AddinDbToTextlist">AddinDbToTextlist</a>
+
 ## How to use
-
-
 
 1. Open DB with a lot of defined integer variables with start values or graph sequence instance
 
